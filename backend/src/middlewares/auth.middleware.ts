@@ -25,8 +25,10 @@ export const authenticate = async (
     }
 
     const token = authHeader.split(' ')[1];
-    const secret = process.env.JWT_SECRET || 'super_secret_jwt_key_chatmind_college_2026';
-
+    const secret = process.env.JWT_SECRET;
+    if(!secret){
+    throw new Error('FATAL: JWT_secret_key is not present');
+    }
     const decoded = jwt.verify(token, secret) as JwtPayload;
     const user = await User.findById(decoded.userId).select('-password');
 

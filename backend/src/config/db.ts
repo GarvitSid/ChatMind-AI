@@ -5,10 +5,9 @@ dotenv.config();
 
 export const connectDB = async (): Promise<void> => {
   const mongoUri = process.env.MONGO_URI;
-  if(!mongoUri){
-     throw new Error('FATAL: Mongo_API_key is not present')
-    }
-
+  if (!mongoUri){
+    throw new Error('FATAL: Mongo_API_key is not present')
+  }
   try {
     const conn = await mongoose.connect(mongoUri, {
       serverSelectionTimeoutMS: 2500, // Fast timeout for responsiveness

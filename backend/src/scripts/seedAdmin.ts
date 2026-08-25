@@ -7,13 +7,29 @@ dotenv.config();
 
 const seedAdmin = async () => {
   try {
-    const mongoUri = process.env.MONGO_URI || 'mongodb://localhost:27017/chatmind_college';
+    const mongoUri = process.env.MONGO_URI;
+    
+    if(!mongoUri){
+     throw new Error('FATAL: Mongo_API_key is not present')
+    }
+
     console.log('[Seed] Connecting to MongoDB:', mongoUri);
     await mongoose.connect(mongoUri);
 
-    const adminEmail = process.env.ADMIN_EMAIL || 'admin@chatmind.edu';
-    const adminPassword = process.env.ADMIN_PASSWORD || 'Admin@123456';
-    const adminName = process.env.ADMIN_NAME || 'System Administrator';
+    const adminEmail = process.env.ADMIN_EMAIL;
+    if(!adminEmail){
+     throw new Error('FATAL: adminEmail is not present')
+    }
+
+    const adminPassword = process.env.ADMIN_PASSWORD;
+    if(!adminPassword){
+     throw new Error('FATAL: adminPassword is not present')
+    }
+
+    const adminName = process.env.ADMIN_NAME;
+    if(!adminName){
+     throw new Error('FATAL: adminName is not present')
+    }
 
     let admin = await User.findOne({ email: adminEmail.toLowerCase() });
 

@@ -5,7 +5,10 @@ import { User, IUser } from '../models/User.js';
 import { AuthRequest } from '../middlewares/auth.middleware.js';
 
 const generateToken = (user: IUser): string => {
-  const secret = process.env.JWT_SECRET || 'super_secret_jwt_key_chatmind_college_2026';
+  const secret = process.env.JWT_SECRET;
+  if(!secret){
+    throw new Error('FATAL: JWT_secret_key is not present')
+  }
   return jwt.sign(
     {
       userId: user._id.toString(),
