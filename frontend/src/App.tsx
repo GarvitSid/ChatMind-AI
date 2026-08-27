@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import { useAuthStore } from './store/authStore.js';
+import { api } from './services/api.js';
 
 // Layout Components
 import { Navbar } from './components/Navbar.js';
@@ -18,6 +19,9 @@ export const App: React.FC = () => {
   const { checkAuth } = useAuthStore();
 
   useEffect(() => {
+    api.get('/health')
+      .then(() => console.log("Backend is awake!"))
+      .catch(() => console.log("Waking backend..."));
     checkAuth();
   }, [checkAuth]);
 
